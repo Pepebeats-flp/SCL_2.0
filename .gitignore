@@ -1,0 +1,4 @@
+# Git ignore file name
+# Ignore all files in the Dataset directory
+
+Dataset/dataset.csv
