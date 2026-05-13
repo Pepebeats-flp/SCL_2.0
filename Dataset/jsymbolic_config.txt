@@ -1,0 +1,19 @@
+<jSymbolic_options>
+window_size=0.0
+window_overlap=0.0
+save_features_for_each_window=false
+save_overall_recording_features=true
+convert_to_arff=false
+convert_to_csv=true
+<features_to_extract>
+Vertical Minor Seconds
+Vertical Tritones
+Vertical Sevenths
+Vertical Dissonance Ratio
+Standard Triads
+Seventh Chords
+Non-Standard Chords
+Complex Chords
+Distance Between Two Most Common Vertical Intervals
+Prevalence Ratio of Two Most Common Vertical Intervals
+Variability of Number of Simultaneous Pitch Classes

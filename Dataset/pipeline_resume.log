@@ -1,0 +1,379 @@
+Loading /home/pepebeats/SCL_2.0/Dataset/dataset.parquet...
+Loaded 877342 rows, columns: ['id', 'chords', 'vectors', 'n_chords']
+
+Processing 88 batch(es) with 1 worker(s)...
+
+Batch 0: already processed (resume), skipping
+Batch 1: already processed (resume), skipping
+Batch 2: already processed (resume), skipping
+Batch 3: already processed (resume), skipping
+Batch 4: already processed (resume), skipping
+Batch 5: already processed (resume), skipping
+  Batch 6: generated 10000 MIDIs in 8.3s
+  Batch 6: starting jSymbolic on 10000 MIDIs...
+  Batch 6: jSymbolic done in 275.9s
+  Batch 6: merged 10000/10000 rows with features
+  Batch 7: generated 10000 MIDIs in 7.3s
+  Batch 7: starting jSymbolic on 10000 MIDIs...
+  Batch 7: jSymbolic done in 229.2s
+  Batch 7: merged 10000/10000 rows with features
+  Batch 8: generated 10000 MIDIs in 5.5s
+  Batch 8: starting jSymbolic on 10000 MIDIs...
+  Batch 8: jSymbolic done in 236.4s
+  Batch 8: merged 10000/10000 rows with features
+  Batch 9: generated 10000 MIDIs in 5.2s
+  Batch 9: starting jSymbolic on 10000 MIDIs...
+  Batch 9: jSymbolic done in 220.4s
+  Batch 9: merged 10000/10000 rows with features
+  Batch 10: generated 10000 MIDIs in 5.3s
+  Batch 10: starting jSymbolic on 10000 MIDIs...
+  Batch 10: jSymbolic done in 219.8s
+  Batch 10: merged 10000/10000 rows with features
+  Batch 11: generated 10000 MIDIs in 5.3s
+  Batch 11: starting jSymbolic on 10000 MIDIs...
+  Batch 11: jSymbolic done in 216.1s
+  Batch 11: merged 10000/10000 rows with features
+  Batch 12: generated 10000 MIDIs in 5.4s
+  Batch 12: starting jSymbolic on 10000 MIDIs...
+  Batch 12: jSymbolic done in 225.8s
+  Batch 12: merged 10000/10000 rows with features
+  Batch 13: generated 10000 MIDIs in 5.5s
+  Batch 13: starting jSymbolic on 10000 MIDIs...
+  Batch 13: jSymbolic done in 227.2s
+  Batch 13: merged 10000/10000 rows with features
+  Batch 14: generated 10000 MIDIs in 5.4s
+  Batch 14: starting jSymbolic on 10000 MIDIs...
+  Batch 14: jSymbolic done in 223.9s
+  Batch 14: merged 10000/10000 rows with features
+  Batch 15: generated 10000 MIDIs in 5.3s
+  Batch 15: starting jSymbolic on 10000 MIDIs...
+  Batch 15: jSymbolic done in 216.3s
+  Batch 15: merged 10000/10000 rows with features
+  Batch 16: generated 10000 MIDIs in 5.5s
+  Batch 16: starting jSymbolic on 10000 MIDIs...
+  Batch 16: jSymbolic done in 221.5s
+  Batch 16: merged 10000/10000 rows with features
+  Batch 17: generated 10000 MIDIs in 5.5s
+  Batch 17: starting jSymbolic on 10000 MIDIs...
+  Batch 17: jSymbolic done in 226.9s
+  Batch 17: merged 10000/10000 rows with features
+  Batch 18: generated 10000 MIDIs in 5.4s
+  Batch 18: starting jSymbolic on 10000 MIDIs...
+  Batch 18: jSymbolic done in 233.2s
+  Batch 18: merged 10000/10000 rows with features
+  Batch 19: generated 10000 MIDIs in 5.5s
+  Batch 19: starting jSymbolic on 10000 MIDIs...
+  Batch 19: jSymbolic done in 230.6s
+  Batch 19: merged 10000/10000 rows with features
+  Batch 20: generated 10000 MIDIs in 5.6s
+  Batch 20: starting jSymbolic on 10000 MIDIs...
+  Batch 20: jSymbolic done in 224.2s
+  Batch 20: merged 10000/10000 rows with features
+  Batch 21: generated 10000 MIDIs in 5.6s
+  Batch 21: starting jSymbolic on 10000 MIDIs...
+  Batch 21: jSymbolic done in 224.8s
+  Batch 21: merged 10000/10000 rows with features
+  Batch 22: generated 10000 MIDIs in 5.4s
+  Batch 22: starting jSymbolic on 10000 MIDIs...
+  Batch 22: jSymbolic done in 226.2s
+  Batch 22: merged 10000/10000 rows with features
+  Batch 23: generated 10000 MIDIs in 5.5s
+  Batch 23: starting jSymbolic on 10000 MIDIs...
+  Batch 23: jSymbolic done in 230.4s
+  Batch 23: merged 10000/10000 rows with features
+  Batch 24: generated 10000 MIDIs in 5.4s
+  Batch 24: starting jSymbolic on 10000 MIDIs...
+  Batch 24: jSymbolic done in 228.3s
+  Batch 24: merged 10000/10000 rows with features
+  Batch 25: generated 10000 MIDIs in 5.4s
+  Batch 25: starting jSymbolic on 10000 MIDIs...
+  Batch 25: jSymbolic done in 226.8s
+  Batch 25: merged 10000/10000 rows with features
+  Batch 26: generated 10000 MIDIs in 5.4s
+  Batch 26: starting jSymbolic on 10000 MIDIs...
+  Batch 26: jSymbolic done in 221.1s
+  Batch 26: merged 10000/10000 rows with features
+  Batch 27: generated 10000 MIDIs in 5.3s
+  Batch 27: starting jSymbolic on 10000 MIDIs...
+  Batch 27: jSymbolic done in 219.3s
+  Batch 27: merged 10000/10000 rows with features
+  Batch 28: generated 10000 MIDIs in 5.5s
+  Batch 28: starting jSymbolic on 10000 MIDIs...
+  Batch 28: jSymbolic done in 220.1s
+  Batch 28: merged 10000/10000 rows with features
+  Batch 29: generated 10000 MIDIs in 5.6s
+  Batch 29: starting jSymbolic on 10000 MIDIs...
+  Batch 29: jSymbolic done in 223.2s
+  Batch 29: merged 10000/10000 rows with features
+  Batch 30: generated 10000 MIDIs in 5.6s
+  Batch 30: starting jSymbolic on 10000 MIDIs...
+  Batch 30: jSymbolic done in 229.8s
+  Batch 30: merged 10000/10000 rows with features
+  Batch 31: generated 10000 MIDIs in 5.5s
+  Batch 31: starting jSymbolic on 10000 MIDIs...
+  Batch 31: jSymbolic done in 226.4s
+  Batch 31: merged 10000/10000 rows with features
+  Batch 32: generated 10000 MIDIs in 5.5s
+  Batch 32: starting jSymbolic on 10000 MIDIs...
+  Batch 32: jSymbolic done in 227.4s
+  Batch 32: merged 10000/10000 rows with features
+  Batch 33: generated 10000 MIDIs in 5.5s
+  Batch 33: starting jSymbolic on 10000 MIDIs...
+  Batch 33: jSymbolic done in 227.9s
+  Batch 33: merged 10000/10000 rows with features
+  Batch 34: generated 10000 MIDIs in 5.4s
+  Batch 34: starting jSymbolic on 10000 MIDIs...
+  Batch 34: jSymbolic done in 220.2s
+  Batch 34: merged 10000/10000 rows with features
+  Batch 35: generated 10000 MIDIs in 5.6s
+  Batch 35: starting jSymbolic on 10000 MIDIs...
+  Batch 35: jSymbolic done in 231.6s
+  Batch 35: merged 10000/10000 rows with features
+  Batch 36: generated 10000 MIDIs in 5.7s
+  Batch 36: starting jSymbolic on 10000 MIDIs...
+  Batch 36: jSymbolic done in 235.4s
+  Batch 36: merged 10000/10000 rows with features
+  Batch 37: generated 10000 MIDIs in 5.5s
+  Batch 37: starting jSymbolic on 10000 MIDIs...
+  Batch 37: jSymbolic done in 229.6s
+  Batch 37: merged 10000/10000 rows with features
+  Batch 38: generated 10000 MIDIs in 5.8s
+  Batch 38: starting jSymbolic on 10000 MIDIs...
+  Batch 38: jSymbolic done in 250.2s
+  Batch 38: merged 10000/10000 rows with features
+  Batch 39: generated 10000 MIDIs in 5.7s
+  Batch 39: starting jSymbolic on 10000 MIDIs...
+  Batch 39: jSymbolic done in 238.6s
+  Batch 39: merged 10000/10000 rows with features
+  Batch 40: generated 10000 MIDIs in 5.5s
+  Batch 40: starting jSymbolic on 10000 MIDIs...
+  Batch 40: jSymbolic done in 227.3s
+  Batch 40: merged 10000/10000 rows with features
+  Batch 41: generated 10000 MIDIs in 5.6s
+  Batch 41: starting jSymbolic on 10000 MIDIs...
+  Batch 41: jSymbolic done in 227.9s
+  Batch 41: merged 10000/10000 rows with features
+  Batch 42: generated 10000 MIDIs in 5.6s
+  Batch 42: starting jSymbolic on 10000 MIDIs...
+  Batch 42: jSymbolic done in 247.6s
+  Batch 42: merged 10000/10000 rows with features
+  Batch 43: generated 10000 MIDIs in 5.6s
+  Batch 43: starting jSymbolic on 10000 MIDIs...
+  Batch 43: jSymbolic done in 229.1s
+  Batch 43: merged 10000/10000 rows with features
+  Batch 44: generated 10000 MIDIs in 5.5s
+  Batch 44: starting jSymbolic on 10000 MIDIs...
+  Batch 44: jSymbolic done in 224.2s
+  Batch 44: merged 10000/10000 rows with features
+  Batch 45: generated 10000 MIDIs in 5.8s
+  Batch 45: starting jSymbolic on 10000 MIDIs...
+  Batch 45: jSymbolic done in 232.7s
+  Batch 45: merged 10000/10000 rows with features
+  Batch 46: generated 10000 MIDIs in 5.9s
+  Batch 46: starting jSymbolic on 10000 MIDIs...
+  Batch 46: jSymbolic done in 234.6s
+  Batch 46: merged 10000/10000 rows with features
+  Batch 47: generated 10000 MIDIs in 5.8s
+  Batch 47: starting jSymbolic on 10000 MIDIs...
+  Batch 47: jSymbolic done in 233.3s
+  Batch 47: merged 10000/10000 rows with features
+  Batch 48: generated 10000 MIDIs in 5.9s
+  Batch 48: starting jSymbolic on 10000 MIDIs...
+  Batch 48: jSymbolic done in 381.3s
+  Batch 48: merged 10000/10000 rows with features
+  Batch 49: generated 10000 MIDIs in 8.4s
+  Batch 49: starting jSymbolic on 10000 MIDIs...
+  Batch 49: jSymbolic done in 340.5s
+  Batch 49: merged 10000/10000 rows with features
+  Batch 50: generated 10000 MIDIs in 7.3s
+  Batch 50: starting jSymbolic on 10000 MIDIs...
+  Batch 50: jSymbolic done in 257.5s
+  Batch 50: merged 10000/10000 rows with features
+  Batch 51: generated 10000 MIDIs in 6.1s
+  Batch 51: starting jSymbolic on 10000 MIDIs...
+  Batch 51: jSymbolic done in 248.3s
+  Batch 51: merged 10000/10000 rows with features
+  Batch 52: generated 10000 MIDIs in 6.0s
+  Batch 52: starting jSymbolic on 10000 MIDIs...
+  Batch 52: jSymbolic done in 242.7s
+  Batch 52: merged 10000/10000 rows with features
+  Batch 53: generated 10000 MIDIs in 6.0s
+  Batch 53: starting jSymbolic on 10000 MIDIs...
+  Batch 53: jSymbolic done in 244.2s
+  Batch 53: merged 10000/10000 rows with features
+  Batch 54: generated 10000 MIDIs in 6.0s
+  Batch 54: starting jSymbolic on 10000 MIDIs...
+  Batch 54: jSymbolic done in 238.0s
+  Batch 54: merged 10000/10000 rows with features
+  Batch 55: generated 10000 MIDIs in 6.1s
+  Batch 55: starting jSymbolic on 10000 MIDIs...
+  Batch 55: jSymbolic done in 253.5s
+  Batch 55: merged 10000/10000 rows with features
+  Batch 56: generated 10000 MIDIs in 6.1s
+  Batch 56: starting jSymbolic on 10000 MIDIs...
+  Batch 56: jSymbolic done in 247.9s
+  Batch 56: merged 10000/10000 rows with features
+  Batch 57: generated 10000 MIDIs in 6.2s
+  Batch 57: starting jSymbolic on 10000 MIDIs...
+  Batch 57: jSymbolic done in 248.2s
+  Batch 57: merged 10000/10000 rows with features
+  Batch 58: generated 10000 MIDIs in 5.9s
+  Batch 58: starting jSymbolic on 10000 MIDIs...
+  Batch 58: jSymbolic done in 239.1s
+  Batch 58: merged 10000/10000 rows with features
+  Batch 59: generated 10000 MIDIs in 6.0s
+  Batch 59: starting jSymbolic on 10000 MIDIs...
+  Batch 59: jSymbolic done in 243.3s
+  Batch 59: merged 10000/10000 rows with features
+  Batch 60: generated 10000 MIDIs in 6.3s
+  Batch 60: starting jSymbolic on 10000 MIDIs...
+  Batch 60: jSymbolic done in 269.0s
+  Batch 60: merged 10000/10000 rows with features
+  Batch 61: generated 10000 MIDIs in 5.9s
+  Batch 61: starting jSymbolic on 10000 MIDIs...
+  Batch 61: jSymbolic done in 236.9s
+  Batch 61: merged 10000/10000 rows with features
+  Batch 62: generated 10000 MIDIs in 5.9s
+  Batch 62: starting jSymbolic on 10000 MIDIs...
+  Batch 62: jSymbolic done in 234.9s
+  Batch 62: merged 10000/10000 rows with features
+  Batch 63: generated 10000 MIDIs in 6.0s
+  Batch 63: starting jSymbolic on 10000 MIDIs...
+  Batch 63: jSymbolic done in 239.9s
+  Batch 63: merged 10000/10000 rows with features
+  Batch 64: generated 10000 MIDIs in 6.1s
+  Batch 64: starting jSymbolic on 10000 MIDIs...
+  Batch 64: jSymbolic done in 242.7s
+  Batch 64: merged 10000/10000 rows with features
+  Batch 65: generated 10000 MIDIs in 5.9s
+  Batch 65: starting jSymbolic on 10000 MIDIs...
+  Batch 65: jSymbolic done in 231.4s
+  Batch 65: merged 10000/10000 rows with features
+  Batch 66: generated 10000 MIDIs in 6.5s
+  Batch 66: starting jSymbolic on 10000 MIDIs...
+  Batch 66: jSymbolic done in 265.7s
+  Batch 66: merged 10000/10000 rows with features
+  Batch 67: generated 10000 MIDIs in 6.4s
+  Batch 67: starting jSymbolic on 10000 MIDIs...
+  Batch 67: jSymbolic done in 263.2s
+  Batch 67: merged 10000/10000 rows with features
+  Batch 68: generated 10000 MIDIs in 6.8s
+  Batch 68: starting jSymbolic on 10000 MIDIs...
+  Batch 68: jSymbolic done in 287.0s
+  Batch 68: merged 10000/10000 rows with features
+  Batch 69: generated 10000 MIDIs in 6.5s
+  Batch 69: starting jSymbolic on 10000 MIDIs...
+  Batch 69: jSymbolic done in 271.3s
+  Batch 69: merged 10000/10000 rows with features
+  Batch 70: generated 10000 MIDIs in 6.4s
+  Batch 70: starting jSymbolic on 10000 MIDIs...
+  Batch 70: jSymbolic done in 257.3s
+  Batch 70: merged 10000/10000 rows with features
+  Batch 71: generated 10000 MIDIs in 6.3s
+  Batch 71: starting jSymbolic on 10000 MIDIs...
+  Batch 71: jSymbolic done in 256.4s
+  Batch 71: merged 10000/10000 rows with features
+  Batch 72: generated 10000 MIDIs in 6.3s
+  Batch 72: starting jSymbolic on 10000 MIDIs...
+  Batch 72: jSymbolic done in 257.0s
+  Batch 72: merged 10000/10000 rows with features
+  Batch 73: generated 10000 MIDIs in 6.3s
+  Batch 73: starting jSymbolic on 10000 MIDIs...
+  Batch 73: jSymbolic done in 254.5s
+  Batch 73: merged 10000/10000 rows with features
+  Batch 74: generated 10000 MIDIs in 6.2s
+  Batch 74: starting jSymbolic on 10000 MIDIs...
+  Batch 74: jSymbolic done in 247.2s
+  Batch 74: merged 10000/10000 rows with features
+  Batch 75: generated 10000 MIDIs in 6.1s
+  Batch 75: starting jSymbolic on 10000 MIDIs...
+  Batch 75: jSymbolic done in 232.0s
+  Batch 75: merged 10000/10000 rows with features
+  Batch 76: generated 10000 MIDIs in 5.9s
+  Batch 76: starting jSymbolic on 10000 MIDIs...
+  Batch 76: jSymbolic done in 232.2s
+  Batch 76: merged 10000/10000 rows with features
+  Batch 77: generated 10000 MIDIs in 6.4s
+  Batch 77: starting jSymbolic on 10000 MIDIs...
+  Batch 77: jSymbolic done in 259.9s
+  Batch 77: merged 10000/10000 rows with features
+  Batch 78: generated 10000 MIDIs in 6.5s
+  Batch 78: starting jSymbolic on 10000 MIDIs...
+  Batch 78: jSymbolic done in 256.9s
+  Batch 78: merged 10000/10000 rows with features
+  Batch 79: generated 10000 MIDIs in 6.4s
+  Batch 79: starting jSymbolic on 10000 MIDIs...
+  Batch 79: jSymbolic done in 251.0s
+  Batch 79: merged 10000/10000 rows with features
+  Batch 80: generated 10000 MIDIs in 6.4s
+  Batch 80: starting jSymbolic on 10000 MIDIs...
+  Batch 80: jSymbolic done in 256.4s
+  Batch 80: merged 10000/10000 rows with features
+  Batch 81: generated 10000 MIDIs in 6.1s
+  Batch 81: starting jSymbolic on 10000 MIDIs...
+  Batch 81: jSymbolic done in 244.0s
+  Batch 81: merged 10000/10000 rows with features
+  Batch 82: generated 10000 MIDIs in 6.5s
+  Batch 82: starting jSymbolic on 10000 MIDIs...
+  Batch 82: jSymbolic done in 262.5s
+  Batch 82: merged 10000/10000 rows with features
+  Batch 83: generated 10000 MIDIs in 6.0s
+  Batch 83: starting jSymbolic on 10000 MIDIs...
+  Batch 83: jSymbolic done in 248.1s
+  Batch 83: merged 10000/10000 rows with features
+  Batch 84: generated 10000 MIDIs in 6.1s
+  Batch 84: starting jSymbolic on 10000 MIDIs...
+  Batch 84: jSymbolic done in 245.3s
+  Batch 84: merged 10000/10000 rows with features
+  Batch 85: generated 10000 MIDIs in 6.3s
+  Batch 85: starting jSymbolic on 10000 MIDIs...
+  Batch 85: jSymbolic done in 239.2s
+  Batch 85: merged 10000/10000 rows with features
+  Batch 86: generated 10000 MIDIs in 6.6s
+  Batch 86: starting jSymbolic on 10000 MIDIs...
+  Batch 86: jSymbolic done in 236.2s
+  Batch 86: merged 10000/10000 rows with features
+  Batch 87: generated 7342 MIDIs in 5.0s
+  Batch 87: starting jSymbolic on 7342 MIDIs...
+  Batch 87: jSymbolic done in 203.1s
+  Batch 87: merged 7342/7342 rows with features
+
+Concatenating 88 batch(es)...
+Concatenated in 3.8s
+Final shape: (877342, 15)
+Columns: ['id', 'chords', 'vectors', 'n_chords', 'Variability_of_Number_of_Simultaneous_Pitch_Classes', 'Distance_Between_Two_Most_Common_Vertical_Intervals', 'Prevalence_Ratio_of_Two_Most_Common_Vertical_Intervals', 'Vertical_Minor_Seconds', 'Vertical_Tritones', 'Vertical_Sevenths', 'Vertical_Dissonance_Ratio', 'Standard_Triads', 'Seventh_Chords', 'Non-Standard_Chords', 'Complex_Chords']
+
+Summary stats for jSymbolic features (11):
+       Variability_of_Number_of_Simultaneous_Pitch_Classes  Distance_Between_Two_Most_Common_Vertical_Intervals  Prevalence_Ratio_of_Two_Most_Common_Vertical_Intervals  Vertical_Minor_Seconds  Vertical_Tritones  Vertical_Sevenths  Vertical_Dissonance_Ratio  Standard_Triads  Seventh_Chords  Non-Standard_Chords  Complex_Chords
+count                                        877342.000000                                        877342.000000                                           877342.000000           877342.000000      877342.000000      877342.000000              877342.000000    877342.000000   877342.000000        877342.000000   877342.000000
+mean                                              0.156204                                             1.413563                                                0.751311                0.004656           0.011303           0.004099                   0.056463         0.851647        0.096728             0.036723        0.008621
+std                                               0.233054                                             0.808711                                                0.156873                0.016815           0.026021           0.014364                   0.095966         0.248605        0.191440             0.109853        0.054091
+min                                               0.000000                                             1.000000                                                0.000000                0.000000           0.000000           0.000000                   0.000000         0.000000        0.000000             0.000000        0.000000
+25%                                               0.000000                                             1.000000                                                0.625000                0.000000           0.000000           0.000000                   0.000000         0.777800        0.000000             0.000000        0.000000
+50%                                               0.000000                                             1.000000                                                0.750000                0.000000           0.000000           0.000000                   0.000000         1.000000        0.000000             0.000000        0.000000
+75%                                               0.362100                                             2.000000                                                0.875000                0.000000           0.000000           0.000000                   0.085110         1.000000        0.120000             0.000000        0.000000
+max                                               2.037000                                             7.000000                                                1.000000                0.200000           0.333300           0.333300                   0.669800         1.000000        1.000000             1.000000        1.000000
+
+Saved parquet: /home/pepebeats/SCL_2.0/Dataset/dataset_with_jsymbolic.parquet
+Saved CSV:     /home/pepebeats/SCL_2.0/Dataset/dataset_with_jsymbolic.csv
+
+First 5 rows:
+   id                                                                                                                                      chords                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         vectors  n_chords  Variability_of_Number_of_Simultaneous_Pitch_Classes  Distance_Between_Two_Most_Common_Vertical_Intervals  Prevalence_Ratio_of_Two_Most_Common_Vertical_Intervals  Vertical_Minor_Seconds  Vertical_Tritones  Vertical_Sevenths  Vertical_Dissonance_Ratio  Standard_Triads  Seventh_Chords  Non-Standard_Chords  Complex_Chords
+0   0                                                                                   [F, C, E7, Am, C, F, C, G7, C, F, C, E7, Am, C, F, G7, C]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          [[1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0], [0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1], [1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0], [1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0], [0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1], [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0], [1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0], [0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1], [1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0], [1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0], [0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1], [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0]]        17                                               0.4242                                                  1.0                                                  0.6471                     0.0            0.06349                0.0                     0.1455           0.7647          0.2353                  0.0             0.0
+1   1                                       [F, C, F, C, G, C, F, C, E7, Am, C, F, G7, C, G, D, G, D, A, D, G, D, F#7, Bm, D, G, A7, D, G, A7, D]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      [[1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0], [1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1], [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0], [1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0], [0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1], [1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0], [1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0], [0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1], [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0], [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0], [0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0], [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0], [0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0], [0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0], [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1], [0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0], [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1], [0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0]]        31                                               0.3678                                                  1.0                                                  0.7500                     0.0            0.04630                0.0                     0.1020           0.8387          0.1613                  0.0             0.0
+2   2                                                                                                                                [E, D, A/C#]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              [[0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0], [0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0]]         3                                               0.0000                                                  1.0                                                  0.6667                     0.0            0.00000                0.0                     0.0000           1.0000          0.0000                  0.0             0.0
+3   3                                                                                            [E, D, A/C#, E, D, A/C#, E, D, A/C#, E, D, A, C]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  [[0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0], [0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0], [0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0], [0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0], [0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0]]        13                                               0.0000                                                  1.0                                                  0.6923                     0.0            0.00000                0.0                     0.0000           1.0000          0.0000                  0.0             0.0
+4   4  [E, G, D, A, E, G, D, A, E, G, D, A, C, D, E, D, A/C#, E, G, D, A, E, G, D, A, E, G, D, A, C, D, E, G, D, A, E, G, D, A, E, G, D, A, C, D]  [[0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1], [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0], [0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1], [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0], [0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1], [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0], [0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0], [0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1], [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0], [0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1], [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0], [0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1], [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0], [0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1], [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0], [0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1], [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0], [0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1], [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0], [0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0]]        45                                               0.0000                                                  1.0                                                  0.9722                     0.0            0.00000                0.0                     0.0000           1.0000          0.0000                  0.0             0.0
+
+Null counts:
+Variability_of_Number_of_Simultaneous_Pitch_Classes       0
+Distance_Between_Two_Most_Common_Vertical_Intervals       0
+Prevalence_Ratio_of_Two_Most_Common_Vertical_Intervals    0
+Vertical_Minor_Seconds                                    0
+Vertical_Tritones                                         0
+Vertical_Sevenths                                         0
+Vertical_Dissonance_Ratio                                 0
+Standard_Triads                                           0
+Seventh_Chords                                            0
+Non-Standard_Chords                                       0
+Complex_Chords                                            0

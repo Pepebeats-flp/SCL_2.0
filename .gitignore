@@ -1,4 +1,6 @@
 # Git ignore file name
 # Ignore all files in the Dataset directory
 
-Dataset/dataset.csv
+Dataset/dataset_with_jsymbolic.csv
+Dataset/midis/*
+jSymbolic_2_2_user/jSymbolic-Rodan/*

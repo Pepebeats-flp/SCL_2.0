@@ -1,0 +1,41 @@
+Loading /home/pepebeats/SCL_2.0/Dataset/dataset.parquet...
+Loaded 877342 rows, columns: ['id', 'chords', 'vectors', 'n_chords']
+
+Processing 88 batch(es) with 3 worker(s)...
+
+  Batch 1: generated 10000 MIDIs in 21.9s
+  Batch 1: starting jSymbolic on 10000 MIDIs...
+  Batch 2: generated 10000 MIDIs in 22.2s
+  Batch 2: starting jSymbolic on 10000 MIDIs...
+  Batch 0: generated 10000 MIDIs in 22.3s
+  Batch 0: starting jSymbolic on 10000 MIDIs...
+  Batch 0: jSymbolic done in 260.2s
+  Batch 0: merged 10000/10000 rows with features
+  >> Batch 0: completed
+  Batch 3: generated 10000 MIDIs in 9.6s
+  Batch 3: starting jSymbolic on 10000 MIDIs...
+  Batch 1: jSymbolic done in 276.5s
+  Batch 1: merged 10000/10000 rows with features
+  >> Batch 1: completed
+  Batch 4: generated 10000 MIDIs in 9.0s
+  Batch 4: starting jSymbolic on 10000 MIDIs...
+  Batch 2: jSymbolic done in 292.1s
+  Batch 2: merged 10000/10000 rows with features
+  >> Batch 2: completed
+  Batch 5: generated 10000 MIDIs in 9.9s
+  Batch 5: starting jSymbolic on 10000 MIDIs...
+  Batch 3: jSymbolic done in 308.5s
+  Batch 3: merged 10000/10000 rows with features
+  >> Batch 3: completed
+  Batch 6: generated 10000 MIDIs in 9.2s
+  Batch 6: starting jSymbolic on 10000 MIDIs...
+  Batch 4: jSymbolic done in 309.8s
+  Batch 4: merged 10000/10000 rows with features
+  >> Batch 4: completed
+  Batch 7: generated 10000 MIDIs in 10.1s
+  Batch 7: starting jSymbolic on 10000 MIDIs...
+  Batch 5: jSymbolic done in 319.0s
+  Batch 5: merged 10000/10000 rows with features
+  >> Batch 5: completed
+  Batch 8: generated 10000 MIDIs in 9.7s
+  Batch 8: starting jSymbolic on 10000 MIDIs...
