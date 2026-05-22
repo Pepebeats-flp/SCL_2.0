@@ -1,22 +1,18 @@
 {
   "Seventh_Chords": {
-    "weight": 0.4347,
-    "invert": false
-  },
-  "Complex_Chords": {
-    "weight": 0.329,
+    "weight": 0.443,
     "invert": false
   },
   "Distance_Between_Two_Most_Common_Vertical_Intervals": {
-    "weight": 0.331,
+    "weight": 0.3383,
     "invert": false
   },
   "Vertical_Dissonance_Ratio": {
-    "weight": 0.214,
+    "weight": 0.2007,
     "invert": false
   },
   "Variability_of_Number_of_Simultaneous_Pitch_Classes": {
-    "weight": 0.3693,
+    "weight": 0.3777,
     "invert": false
   }
 }

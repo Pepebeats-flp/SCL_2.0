@@ -25,9 +25,9 @@ def compute_pcs_weights(csv_path='survey_correlations.csv',
     Parameters:
     -----------
     csv_path : str
-        CSV with columns: Feature, Bajo_r, Medio_r, Alto_r
+        CSV with columns: Feature, Bajo_r, Medio_r, Alto_r (or Bajo, Medio, Alto)
     sig_csv_path : str
-        CSV with columns: Feature, Bajo_p, Medio_p, Alto_p
+        CSV with columns: Feature, Bajo_p, Medio_p, Alto_p (or Bajo, Medio, Alto)
     p_threshold : float
         p-value threshold for significance
     exclude_mixed_sign : bool
@@ -40,17 +40,25 @@ def compute_pcs_weights(csv_path='survey_correlations.csv',
     corr = pd.read_csv(csv_path)
     pvals = pd.read_csv(sig_csv_path) if sig_csv_path else None
     
+    # Detect column naming: with or without _r / _p suffix
+    col_map_r = {'Bajo': 'Bajo_r', 'Medio': 'Medio_r', 'Alto': 'Alto_r'}
+    col_map_p = {'Bajo': 'Bajo_p', 'Medio': 'Medio_p', 'Alto': 'Alto_p'}
+    r_suffix = '_r' if 'Alto_r' in corr.columns else ''
+    p_suffix = '_p' if pvals is not None and 'Alto_p' in pvals.columns else ''
+    
+    msi_levels = ['Bajo', 'Medio', 'Alto']
+    
     weights = {}
     for _, row in corr.iterrows():
         short = row['Feature']
         long_name = SHORT_TO_LONG.get(short, short)
-        r_vals = [row['Bajo_r'], row['Medio_r'], row['Alto_r']]
+        r_vals = [row[f'{m}{r_suffix}'] for m in msi_levels]
         
         if pvals is not None:
             p_row = pvals[pvals['Feature'] == short]
             sig = False
             if len(p_row) > 0:
-                p_vals = [p_row['Bajo_p'].values[0], p_row['Medio_p'].values[0], p_row['Alto_p'].values[0]]
+                p_vals = [p_row[f'Bajo{p_suffix}'].values[0], p_row[f'Medio{p_suffix}'].values[0], p_row[f'Alto{p_suffix}'].values[0]]
                 sig = any(p < p_threshold for p in p_vals if not np.isnan(p))
         else:
             sig = True
@@ -71,7 +79,7 @@ def compute_pcs_weights(csv_path='survey_correlations.csv',
                 if len(p_row) > 0:
                     sig_pos = False
                     sig_neg = False
-                    for msi, r_name, p_name in [('Bajo','Bajo_r','Bajo_p'), ('Medio','Medio_r','Medio_p'), ('Alto','Alto_r','Alto_p')]:
+                    for msi, r_name, p_name in [('Bajo',f'Bajo{r_suffix}',f'Bajo{p_suffix}'), ('Medio',f'Medio{r_suffix}',f'Medio{p_suffix}'), ('Alto',f'Alto{r_suffix}',f'Alto{p_suffix}')]:
                         r = row[r_name]; p = p_row[p_name].values[0]
                         if p < p_threshold:
                             if r > 0: sig_pos = True
