@@ -91,7 +91,7 @@ def parse_chord(chord_str):
 
     if second == 'b' and rest[:2] in _ROOTS_FLAT:
         root = _ROOTS_FLAT[rest[:2]]; rest = rest[2:]
-    elif second in 's#' and first not in ('C', 'F'):
+    elif second and second in 's#' and first not in ('C', 'F'):
         rem = rest[2:]
         if not rem.startswith('us2') and not rem.startswith('us4'):
             two = first + '#'

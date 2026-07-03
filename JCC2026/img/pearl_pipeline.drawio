@@ -1,0 +1,135 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="PEARL Pipeline" id="p">
+    <mxGraphModel dx="1768" dy="971" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="750" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="d_title" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#64B5F6;fontSize=16;fontStyle=1;fontColor=#1565C0;" value="DATA PREPARATION" vertex="1">
+          <mxGeometry height="35" width="200" x="400" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="d1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#90CAF9;fontSize=13;fontStyle=0;fontColor=#212121;" value="Chordonomicon&lt;br&gt;~877k MIDI progressions" vertex="1">
+          <mxGeometry height="55" width="190" x="55" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="d2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#90CAF9;fontSize=13;fontStyle=0;fontColor=#212121;" value="Encoding &amp;amp; jSymbolic&lt;br&gt;48-dim + 11 features" vertex="1">
+          <mxGeometry height="55" width="190" x="275" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="d3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#90CAF9;fontSize=13;fontStyle=0;fontColor=#212121;" value="PCS via Perceptual Study&lt;br&gt;43 participants → 4 dims" vertex="1">
+          <mxGeometry height="55" width="210" x="495" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="d4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#90CAF9;strokeColor=#64B5F6;fontSize=13;fontStyle=1;fontColor=#FFFFFF;" value="4 PCS dimensions&lt;br&gt;7C | VNSPC | DTMCVI | VDR" vertex="1">
+          <mxGeometry height="55" width="210" x="735" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="da1" edge="1" parent="1" source="d1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#64B5F6;strokeWidth=2;endArrow=classic;rounded=1;" target="d2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="da2" edge="1" parent="1" source="d2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#64B5F6;strokeWidth=2;endArrow=classic;rounded=1;" target="d3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="da3" edge="1" parent="1" source="d3" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#64B5F6;strokeWidth=2;endArrow=classic;rounded=1;" target="d4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a_title" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#FFB74D;fontSize=16;fontStyle=1;fontColor=#E65100;" value="ARCHITECTURE — RVAE-LSTM" vertex="1">
+          <mxGeometry height="35" width="280" x="370" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="enc" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#FFB74D;fontSize=13;fontStyle=0;fontColor=#212121;" value="Bidir LSTM&lt;br&gt;Encoder&lt;br&gt;2×256" vertex="1">
+          <mxGeometry height="75" width="120" x="55" y="295" as="geometry" />
+        </mxCell>
+        <mxCell id="z" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFB74D;strokeColor=#FB8C00;fontSize=14;fontStyle=1;fontColor=#FFFFFF;aspect=fixed;" value="⏺ z&lt;br&gt;32-dim" vertex="1">
+          <mxGeometry height="72" width="72" x="204" y="296.5" as="geometry" />
+        </mxCell>
+        <mxCell id="dec" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#FFB74D;fontSize=13;fontStyle=0;fontColor=#212121;" value="Autoregressive&lt;br&gt;LSTM Decoder&lt;br&gt;2×256" vertex="1">
+          <mxGeometry height="75" width="150" x="305" y="295" as="geometry" />
+        </mxCell>
+        <mxCell id="ea1" edge="1" parent="1" source="enc" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#FFB74D;strokeWidth=2;endArrow=classic;rounded=1;" target="z">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea2" edge="1" parent="1" source="z" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#FFB74D;strokeWidth=2;endArrow=classic;rounded=1;" target="dec">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cp" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#FFB74D;fontSize=11;fontStyle=0;fontColor=#212121;" value="c_predictor:&amp;nbsp;&lt;div&gt;z → [7C, VNSPC, DTMCVI, VDR]&lt;/div&gt;" vertex="1">
+          <mxGeometry height="45" width="170" x="55" y="395" as="geometry" />
+        </mxCell>
+        <mxCell id="kp" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#FFB74D;fontSize=11;fontStyle=0;fontColor=#212121;" value="key_predictor: z → 12 key" vertex="1">
+          <mxGeometry height="45" width="135" x="290" y="395" as="geometry" />
+        </mxCell>
+        <mxCell id="eca" edge="1" parent="1" source="z" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#FFB74D;strokeWidth=1.5;endArrow=classic;dashed=1;rounded=1;exitX=0.141;exitY=0.915;exitDx=0;exitDy=0;exitPerimeter=0;startArrow=classic;startFill=1;" target="cp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eka" edge="1" parent="1" source="z" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#FFB74D;strokeWidth=1.5;endArrow=classic;dashed=1;rounded=1;startArrow=classic;startFill=1;exitX=0.788;exitY=0.933;exitDx=0;exitDy=0;exitPerimeter=0;" target="kp">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="261" y="380" />
+              <mxPoint x="360" y="380" />
+            </Array>
+            <mxPoint x="270" y="370" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="prior" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#FFB74D;fontSize=11;fontStyle=0;fontColor=#212121;" value="ComplexityPrior&lt;br&gt;c → μ_prior, σ_prior" vertex="1">
+          <mxGeometry height="45" width="180" x="150" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="out_a" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFB74D;strokeColor=#FB8C00;fontSize=13;fontStyle=1;fontColor=#FFFFFF;" value="48-dim chord&lt;br&gt;logits → decode" vertex="1">
+          <mxGeometry height="45" width="180" x="505" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="i_title" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#81C784;fontSize=16;fontStyle=1;fontColor=#2E7D32;" value="INFERENCE — Gradient Ascent on z" vertex="1">
+          <mxGeometry height="35" width="320" x="320" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="i1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#A5D6A7;fontSize=13;fontStyle=0;fontColor=#212121;" value="Encode input&lt;br&gt;x → z_orig" vertex="1">
+          <mxGeometry height="55" width="150" x="100" y="527.5" as="geometry" />
+        </mxCell>
+        <mxCell id="i2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#A5D6A7;fontSize=13;fontStyle=0;fontColor=#212121;" value="Gradient Ascent&lt;br&gt;min MSE(PCS(c_pred), target)&lt;br&gt;+ 0.005·MSE(z, z_orig)" vertex="1">
+          <mxGeometry height="70" width="250" x="365" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="i3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#A5D6A7;fontSize=13;fontStyle=0;fontColor=#212121;" value="Decode&amp;nbsp;&lt;div&gt;z→ enriched progression&lt;/div&gt;" vertex="1">
+          <mxGeometry height="55" width="170" x="710" y="527.5" as="geometry" />
+        </mxCell>
+        <mxCell id="ei1" edge="1" parent="1" source="i1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#81C784;strokeWidth=2;endArrow=classic;rounded=1;" target="i2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ei2" edge="1" parent="1" source="i2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#81C784;strokeWidth=2;endArrow=classic;rounded=1;" target="i3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ex_in" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#A5D6A7;strokeColor=#81C784;fontSize=12;fontStyle=1;fontColor=#FFFFFF;" value="IN:  Cm — Gm — Cm — Fm — Cm" vertex="1">
+          <mxGeometry height="25" width="250" x="50" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="ex_out" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#A5D6A7;strokeColor=#81C784;fontSize=12;fontStyle=1;fontColor=#FFFFFF;" value="OUT: Cmaj7 — Gm7 — Cmaj7 — Fm7 — Cmaj7" vertex="1">
+          <mxGeometry height="25" width="350" x="620" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="v1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#81C784;fontSize=12;fontStyle=0;fontColor=#212121;" value="PEARL-v1 (weighted):  PCS_w = Σ(w·c)/1.360" vertex="1">
+          <mxGeometry height="28" width="320" x="165" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="v2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#81C784;fontSize=12;fontStyle=0;fontColor=#212121;" value="PEARL-v2 (equal):  PCS_eq = mean(c)" vertex="1">
+          <mxGeometry height="28" width="280" x="505" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="l_title" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCDD2;strokeColor=#E57373;fontSize=14;fontStyle=1;fontColor=#C62828;" value="TRAINING LOSSES" vertex="1">
+          <mxGeometry height="35" width="200" x="740" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="l1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#EF9A9A;fontSize=12;fontStyle=0;fontColor=#212121;" value="L = L_recon + β·L_KL + λ_c·L_cpred + λ_k·L_key" vertex="1">
+          <mxGeometry height="35" width="290" x="700" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="l2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#EF9A9A;fontSize=10;fontStyle=0;fontColor=#212121;" value="BCE (length mask)  |  KL (free bits 1.0/0.25)" vertex="1">
+          <mxGeometry height="36" width="290" x="700" y="334" as="geometry" />
+        </mxCell>
+        <mxCell id="l3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#EF9A9A;fontSize=10;fontStyle=0;fontColor=#212121;" value="MSE(c_pred, c_true)  |  CE(key_pred, key)" vertex="1">
+          <mxGeometry height="35" width="290" x="700" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="lP4x4FJIVeBZNhtc3dka-1" edge="1" parent="1" source="z" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#FFB74D;strokeWidth=1.5;endArrow=classic;dashed=1;rounded=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;startArrow=classic;startFill=1;" target="prior">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="55" y="302" as="sourcePoint" />
+            <mxPoint x="705.8999999999996" y="290.3850000000001" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lP4x4FJIVeBZNhtc3dka-2" edge="1" parent="1" source="dec" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#FFB74D;strokeWidth=2;endArrow=classic;rounded=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="out_a">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="495" y="333" />
+              <mxPoint x="505" y="333" />
+            </Array>
+            <mxPoint x="575" y="450" as="sourcePoint" />
+            <mxPoint x="610" y="451" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

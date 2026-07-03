@@ -128,20 +128,20 @@ def movement_loss(logits, lengths):
     return loss / n if n > 0 else 0.0
 
 
+def per_dimension_kl(mu, logvar):
+    kl_per_dim = -0.5 * (1 + logvar - mu.pow(2) - logvar.exp())
+    return kl_per_dim
+
+
 def cvae_loss(logits, targets, mu, logvar, lengths,
               beta=BETA, free_bits=FREE_BITS,
               lambda_coh=LAMBDA_COH, lambda_tens=LAMBDA_TENS, lambda_mov=LAMBDA_MOV,
               inputs=None):
-    recon_loss = 0
-    total_tokens = 0
-    for i in range(logits.size(0)):
-        n = lengths[i]
-        l = F.binary_cross_entropy_with_logits(
-            logits[i, :n], targets[i, :n], reduction='sum'
-        )
-        recon_loss += l
-        total_tokens += n
-    recon_loss = recon_loss / total_tokens
+    batch_size, max_len = targets.shape[:2]
+    mask = torch.arange(max_len, device=lengths.device).unsqueeze(0) < lengths.unsqueeze(1)
+    loss = F.binary_cross_entropy_with_logits(logits, targets, reduction='none')
+    loss = (loss * mask.unsqueeze(-1)).sum() / mask.sum()
+    recon_loss = loss
 
     kl = -0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp(), dim=-1)
     kl = torch.max(kl - free_bits, torch.zeros_like(kl))

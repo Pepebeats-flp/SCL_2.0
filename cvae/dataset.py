@@ -15,9 +15,13 @@ CONDITIONED_PARQUET = DATASET_DIR / 'dataset_conditioned.parquet'
 CONDITION_COLS = ['pcs', '7C', 'VNSPC', 'DTMCVI', 'VDR']
 CONDITION_DIM = len(CONDITION_COLS)
 
+PERCEPTUAL_COLS = ['7C', 'VNSPC', 'DTMCVI', 'VDR']
+PERCEPTUAL_DIM = len(PERCEPTUAL_COLS)
+
 
 class ChordProgressionDataset(Dataset):
-    def __init__(self, parquet_path=None, max_len=256, use_conditioning=False):
+    def __init__(self, parquet_path=None, max_len=256, use_conditioning=False,
+                 cond_cols=None, use_key=False):
         if parquet_path is None:
             if use_conditioning:
                 parquet_path = CONDITIONED_PARQUET
@@ -25,38 +29,58 @@ class ChordProgressionDataset(Dataset):
                 parquet_path = DEFAULT_PARQUET
         self.max_len = max_len
         self.use_conditioning = use_conditioning
+        self.cond_cols = cond_cols if cond_cols is not None else CONDITION_COLS
+        self.use_key = use_key
 
         print(f'Loading {parquet_path}...')
-        df = pd.read_parquet(parquet_path)
-        self.ids = df['id'].values
+        needed_cols = ['symbolic', 'n_chords']
+        if self.use_conditioning:
+            needed_cols += [c for c in self.cond_cols if c not in needed_cols]
+        df = pd.read_parquet(parquet_path, columns=needed_cols)
+
+        # Store raw JSON strings — parse lazily in __getitem__.
+        # This avoids loading all 877K sequences as float32 arrays (~13GB).
+        self.raw_seqs = df['symbolic'].values
         self.n_chords = df['n_chords'].values
-        self.symbolic_raw = df['symbolic'].values
 
         if self.use_conditioning:
             cond_data = {}
-            for col in CONDITION_COLS:
+            for col in self.cond_cols:
                 cond_data[col] = df[col].values.astype(np.float32)
             self.conditioning = np.stack(
-                [cond_data[col] for col in CONDITION_COLS], axis=1
+                [cond_data[col] for col in self.cond_cols], axis=1
             )
 
-        print(f'Loaded {len(df)} progressions'
-              f'{" with conditioning" if use_conditioning else ""}')
+        print(f'Loaded {len(self.raw_seqs)} progressions'
+              f'{" with conditioning" if use_conditioning else ""}'
+              f'{" + key" if use_key else ""}')
 
     def __len__(self):
-        return len(self.ids)
+        return len(self.raw_seqs)
+
+    def _detect_key(self, seq):
+        roots = seq[:self.max_len, :12].argmax(dim=-1)
+        if roots.numel() == 0:
+            key = 0
+        else:
+            counts = torch.bincount(roots.long(), minlength=12)
+            key = counts.argmax().item()
+        key_onehot = torch.zeros(12)
+        key_onehot[key] = 1.0
+        return key_onehot
 
     def __getitem__(self, idx):
-        n = self.n_chords[idx]
-        seq = np.array(json.loads(self.symbolic_raw[idx]), dtype=np.float32)
-        seq = torch.from_numpy(seq)
-
-        if seq.size(0) > self.max_len:
-            seq = seq[:self.max_len]
-            n = self.max_len
+        arr = json.loads(self.raw_seqs[idx])
+        if len(arr) > self.max_len:
+            arr = arr[:self.max_len]
+        seq = torch.from_numpy(np.array(arr, dtype=np.float32))
+        n = len(seq)
 
         if self.use_conditioning:
             cond = torch.from_numpy(self.conditioning[idx])
+            if self.use_key:
+                key_onehot = self._detect_key(seq)
+                cond = torch.cat([cond, key_onehot])
             return seq, n, cond
 
         return seq, n
@@ -79,30 +103,33 @@ def collate_fn(batch):
     return padded, lengths
 
 
-def create_dataloader(parquet_path=None, batch_size=128, shuffle=True,
+def split_indices(total, val_split=0.1, test_size=1000, seed=42):
+    gen = torch.Generator().manual_seed(seed)
+    idx = torch.randperm(total, generator=gen).tolist()
+    test_idx = idx[:test_size]
+    remaining = total - test_size
+    val_size = int(remaining * val_split)
+    train_idx = idx[test_size:test_size + remaining - val_size]
+    val_idx = idx[test_size + remaining - val_size:]
+    return {'train': train_idx, 'val': val_idx, 'test': test_idx}
+
+
+def create_dataloader(parquet_path=None, batch_size=256, shuffle=True,
                       max_len=256, num_workers=0, use_conditioning=False,
-                      split='train', val_split=0.1, test_size=1000):
-    dataset = ChordProgressionDataset(parquet_path, max_len=max_len,
-                                      use_conditioning=use_conditioning)
+                      split='train', val_split=0.1, test_size=1000,
+                      dataset=None, indices=None, use_key=False):
+    if dataset is None:
+        dataset = ChordProgressionDataset(parquet_path, max_len=max_len,
+                                          use_conditioning=use_conditioning,
+                                          use_key=use_key)
+    if indices is None:
+        indices = split_indices(len(dataset), val_split=val_split, test_size=test_size)
 
-    total = len(dataset)
-    gen = torch.Generator().manual_seed(42)
-    indices = torch.randperm(total, generator=gen).tolist()
-
-    if split == 'test':
-        subset_indices = indices[:test_size]
-    else:
-        remaining = total - test_size
-        val_size = int(remaining * val_split)
-        train_size = remaining - val_size
-        if split == 'train':
-            subset_indices = indices[test_size:test_size + train_size]
-        else:
-            subset_indices = indices[test_size + train_size:]
-
-    dataset = torch.utils.data.Subset(dataset, subset_indices)
+    subset = torch.utils.data.Subset(dataset, indices[split])
 
     return DataLoader(
-        dataset, batch_size=batch_size, shuffle=shuffle and split == 'train',
+        subset, batch_size=batch_size, shuffle=shuffle and split == 'train',
         collate_fn=collate_fn, num_workers=num_workers,
+        pin_memory=True, persistent_workers=num_workers > 0,
+        prefetch_factor=2 if num_workers > 0 else None,
     )

@@ -4,3 +4,33 @@
 Dataset/dataset_with_jsymbolic.csv
 Dataset/midis/*
 jSymbolic_2_2_user/jSymbolic-Rodan/*
+
+# Python virtual environment
+.venv/
+
+# Python bytecode cache
+__pycache__/
+*.pyc
+
+# VS Code settings
+.vscode/
+
+# TensorBoard logs
+events.out.tfevents.*
+
+# Model checkpoints
+checkpoints/
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.bbl
+*.blg
+*.out
+*.synctex.gz
+*.bak
+missfont.log
+
+# OS files
+.DS_Store
+Thumbs.db
