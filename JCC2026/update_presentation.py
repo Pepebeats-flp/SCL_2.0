@@ -16,6 +16,7 @@ import shutil
 
 import build_presentation as bp
 from pptx import Presentation
+from pptx.dml.color import RGBColor
 from pptx.enum.text import PP_ALIGN
 from pptx.util import Inches, Pt
 
@@ -83,6 +84,41 @@ def move_slide(prs, slide, index):
     sld_ids.insert(index, el)
 
 
+def delete_slide(prs, slide):
+    """Remove a slide and its relationship from the presentation."""
+    from pptx.oxml.ns import qn
+
+    sld_ids = prs.slides._sldIdLst
+    for el in list(sld_ids):
+        if el.get("id") == str(slide.slide_id):
+            rId = el.get(qn("r:id"))
+            sld_ids.remove(el)
+            prs.part.drop_rel(rId)
+            return
+
+
+def reorder(prs, slides):
+    """Set the slide order to exactly `slides`."""
+    sld_ids = prs.slides._sldIdLst
+    order = [str(sl.slide_id) for sl in slides]
+    by_id = {e.get("id"): e for e in list(sld_ids)}
+    for el in list(sld_ids):
+        sld_ids.remove(el)
+    for sid in order:
+        sld_ids.append(by_id[sid])
+
+
+def link_repo(slide, url="https://github.com/Pepebeats-flp/pearl-sc"):
+    """Make the repository URL clickable."""
+    for sh in slide.shapes:
+        if not sh.has_text_frame or "github.com" not in sh.text_frame.text:
+            continue
+        for para in sh.text_frame.paragraphs:
+            for run in para.runs:
+                if "github.com" in run.text:
+                    run.hyperlink.address = url
+
+
 def renumber(prs):
     """Rewrite every page-number box according to the current slide order."""
     for i, slide in enumerate(prs.slides, 1):
@@ -98,6 +134,10 @@ def main() -> None:
     shutil.copyfile(DECK, BACKUP)
     prs = Presentation(DECK)
     s = list(prs.slides)
+    # clone the clean content layout before any slide is modified
+    ms = clone_slide(prs, s[8])
+    pp = clone_slide(prs, s[8])
+    ts = clone_slide(prs, s[8])
 
     # ---- 1. Title: add a technical subtitle --------------------------------
     sl = s[0]
@@ -112,59 +152,42 @@ def main() -> None:
                  "each term is defined when it first appears. Joint work with "
                  "Nicolás Rojas-Morales, UTFSM.")
 
-    # ---- 2. Outline --------------------------------------------------------
-    sl = s[1]
-    items = [
-        (80, 92, "Problem", "What is missing today"),
-        (81, 93, "Complexity Score", "A score from listeners [3, 4]"),
-        (82, 94, "Model", "How PEARL works"),
-        (83, 95, "Setup and Metrics", "Data, baselines, measures"),
-        (84, 96, "Results", "Comparison with earlier systems"),
-        (85, 97, "Conclusions", "Limits and next steps"),
-    ]
-    for tid, did, t, d in items:
-        tsh, dsh = bp.by_id(sl, tid), bp.by_id(sl, did)
-        tsh.width = dsh.width = Inches(4.00)
-        bp.simple(tsh, t, bp.fit_size(t, 17.0, 4.00, min_size=13.0, bold=True),
-                  GREY, bold=True)
-        bp.simple(dsh, d, bp.fit_size(d, 11.5, 4.00, min_size=9.5), GREY)
-    for sid in (83, 84, 85, 95, 96, 97):  # keep a gap after the red square
-        sh = bp.by_id(sl, sid)
-        sh.left, sh.width = Inches(5.49), Inches(3.90)
-
-    # ---- 3. Motivation -----------------------------------------------------
-    sl = s[2]
-    st = bp.by_id(sl, 112)
-    st.top, st.height = Inches(3.00), Inches(1.00)
-    bp.simple(st, "Most songs use a few simple chords. Reharmonization can "
-                  "enrich them, but tools cannot control how much changes.",
-              14.5, BODY)
-    bp.by_id(sl, 110).top = Inches(3.95)
-    bp.add_textbox(sl, 2.27, 4.02, 6.90, 0.40, [
-        dict(text="•  Chord: three or more notes played together; "
-                  "progression: a series of chords in order.", size=9.5,
-             color=GREY),
-        dict(text="•  Reharmonization: replacing the chords of a progression "
-                  "with different ones.", size=9.5, color=GREY),
-    ])
-    pearl = bp.by_id(sl, 113)
-    pearl.top = Inches(4.55)
-    bp.notes(sl, "0:40 — Context: large-scale analyses of Western popular music, "
+    # ---- 2. Motivation (content layout with staff example) ------------------
+    mot = clone_slide(prs, s[8])
+    retitle(mot, "Motivation",
+            "Richer chords simply have more notes: compare these two versions",
+            2)
+    mb = bp.by_id(mot, 127)
+    mb.width = Inches(4.05)
+    bp.write(mb.text_frame, bp.bullets([
+        ("Chord: ", "3+ notes played together (C–E–G)."),
+        ("Progression: ", "a series of chords in order."),
+        ("Richer chord: ", "more notes (C–E–G–B)."),
+        ("Reharmonization: ", "changing the chords."),
+        ("The gap: ", "no tool lets you choose how much."),
+    ], size=11, space_after=8))
+    bp.add_picture_fit(mot, "slides_assets/enrichment_example.png",
+                       4.35, 2.05, 5.05, 1.60)
+    bp.add_textbox(mot, 4.35, 3.78, 5.05, 0.55, [
+        dict(text="Hand-written example. Simple: 3 notes per chord. Enriched: "
+                  "4–6 notes per chord.", size=9.5, color=GREY, italic=True)])
+    bp.notes(mot, "0:40 — Context: large-scale analyses of Western popular music, "
                  "such as the McGill Billboard corpus, show a narrow repertoire "
-                 "of triads and repeating cadential formulas. Definitions used "
-                 "in this talk follow standard tonal theory: a chord is three or "
-                 "more notes sounded together; a progression is a series of "
-                 "chords played in order; reharmonization replaces the chords "
-                 "of a progression with different ones while keeping the song's "
-                 "key, as in the enrichment line of work [2, 6]. Existing tools "
-                 "can transform a progression, but they do not let the user "
-                 "choose how much complexity to add or which property should "
-                 "change.")
+                 "of triads and repeating cadential formulas. Definitions follow "
+                 "standard tonal theory: a chord is three or more notes sounded "
+                 "together; a progression is a series of chords in order; "
+                 "reharmonization replaces the chords of a progression with "
+                 "different ones. The staff shows the same progression twice: on "
+                 "top, plain triads with three notes; below, richer chords with "
+                 "four, five and six notes. Musicians do this by hand, but no "
+                 "tool lets the user choose how much richer the result should "
+                 "be.")
 
     # ---- 4. Gap & contributions -------------------------------------------
     sl = s[3]
     retitle(sl, "What Others Did and What Is Missing",
-            "Earlier systems, the gap, and our proposal", 4)
+            "Can a model target what listeners perceive, one property at a "
+            "time?", 4)
     bp.write(bp.by_id(sl, 127).text_frame,
              [dict(text="Earlier systems", size=13, color=RED, bold=True,
                    space_after=6)] + bp.bullets([
@@ -177,84 +200,81 @@ def main() -> None:
                   "enrichment."),
              ], size=10.5, space_after=8))
     bp.write(bp.by_id(sl, 128).text_frame,
-             [dict(text="The gap, and what we propose", size=13, color=RED,
-                   bold=True, space_after=6)] + bp.bullets([
-                 ("Missing: ", "a target, a choice of property, and a measure "
-                  "based on listeners."),
-                 ("PCS: ", "a complexity score from listening tests [3, 4]."),
-                 ("PEARL: ", "reaches a chosen score on 877k real progressions "
-                  "[1], 11 keys, 4–12 chords."),
-             ], size=10.5, space_after=8))
+             [dict(text="The gap", size=13, color=RED, bold=True,
+                   space_after=0)])
+    rows = [
+        ["", "Target", "Property", "Listener score"],
+        ["Comanducci [2]", "5 levels", "No", "No"],
+        ["Uemura [6]", "No", "No", "No"],
+        ["MusicVAE [5]", "No", "No", "No"],
+        ["PEARL", "Any", "Yes", "Yes"],
+    ]
+    gfx = bp.add_table(sl, 5.05, 2.42, 4.35, rows, [1.20, 0.78, 0.92, 1.45],
+                       font_size=9, header_size=8.5, highlight=(4,))
+    for r in range(1, 5):
+        for c in range(1, 4):
+            cell = gfx.table.cell(r, c)
+            for para in cell.text_frame.paragraphs:
+                for run in para.runs:
+                    if run.text.strip() == "Yes":
+                        run.font.color.rgb = RGBColor(0xE3, 0x05, 0x20)
+                        run.font.bold = True
+                    elif run.text.strip() == "No":
+                        run.font.color.rgb = RGBColor(0x9A, 0x9A, 0x9A)
+    bp.add_textbox(sl, 5.05, 4.12, 4.35, 0.55, [
+        dict(text="No earlier system offers all three.", size=10.5,
+             color=DARK_RED, bold=True)])
     bp.notes(sl, "1:10 — Comanducci et al. [2] is the closest work: their "
                  "complexity is a single number produced by statistical models "
                  "that predict the next chord (prediction by partial matching, "
                  "HMM and RNN); their chord vocabulary has four types and their "
-                 "data are 6,311 synthetic five-chord loops in C. Uemura et al. "
-                 "[6] morph chords inside a VAE, without a target. MusicVAE [5] "
-                 "organises a latent space for generation. What is missing is a "
-                 "target expressed in perceptual terms, a choice of which "
-                 "property changes, and validation on real, multi-key data. "
-                 "That is what PCS and PEARL add.")
-
-    # ---- 5. Encoding -------------------------------------------------------
-    sl = s[4]
-    retitle(sl, "How Chords Are Represented",
-            "48 yes/no values per chord, readable as a chord name", 5)
-    bp.write(bp.by_id(sl, 127).text_frame, bp.bullets([
-        "48 yes/no values per chord.",
-        ("Seven slots: ", "root, type, seventh, extensions, alterations, "
-         "added notes, bass."),
-        ("One row per chord; ", "the values decode back to a chord name."),
-        ("877k real progressions [1]; ", "split 80/10/10 by song."),
-    ], size=11, space_after=8))
-    table = next(sh for sh in sl.shapes if sh.has_table).table
-    meanings = ["Root pitch class (C–B)",
-                "maj, min, dim, aug, sus, no3d",
-                "none, dom7, maj7, dim7, aug7",
-                "9, 11, 13 (multi-label)",
-                "b9, #9, #11, b13",
-                "add9, add11, add13",
-                "Bass note (C–B) + inversion"]
-    set_cell(table.cell(0, 2), "Meaning")
-    for i, text in enumerate(meanings, start=1):
-        set_cell(table.cell(i, 2), text)
-    bp.notes(sl, "0:55 — The encoding is explicit, not learned: 48 binary "
-                 "values in seven slots. The vector is reversible, so any "
-                 "output can be read as a chord symbol. A progression of T "
-                 "chords is a T by 48 matrix. Training data are 877k "
-                 "progressions from Chordonomicon [1], and jSymbolic [3] "
-                 "computes the features used for PCS. The split is by song, so "
-                 "no song appears in two subsets.")
+                 "data are 6,311 synthetic five-chord loops in C. The table "
+                 "compares the three capabilities that matter here: a target "
+                 "level (Comanducci has five classes), the choice of which "
+                 "property changes, and a score built from listening tests. "
+                 "Uemura et al. [6] morph chords inside a VAE without a target; "
+                 "MusicVAE [5] organises a latent space for generation. No "
+                 "earlier system offers all three, which is what PCS and PEARL "
+                 "add.")
 
     # ---- 6. PCS -------------------------------------------------------------
     sl = s[5]
     retitle(sl, "A Complexity Score from Listeners (PCS)",
-            "We asked listeners instead of writing a formula", 6)
-    bp.write(bp.by_id(sl, 127).text_frame, bp.bullets([
-        ("43 listeners; ", "1,032 pairwise comparisons on a 5-point scale."),
-        ("11 properties measured [3]; ", "4 matched the listeners."),
-        ("Score: ", "weighted average, 0 = simple, 1 = complex."),
-        ("v1: ", "listener weights. v2: all four weighted equally."),
-    ], size=11, space_after=8))
-    table = next(sh for sh in sl.shapes if sh.has_table).table
+            "A human filter and a statistical filter select four properties",
+            6)
+    body = bp.by_id(sl, 127)
+    body._element.getparent().remove(body._element)
+    bp.add_picture_fit(sl, "slides_assets/pcs_funnel.png",
+                       0.55, 1.92, 4.55, 2.67)
+    bp.add_textbox(sl, 0.55, 4.68, 4.55, 0.35, [
+        dict(text="53 joined; 43 valid; 1,032 pairwise comparisons.",
+             size=9, color=GREY, italic=True)])
+    gfx_shape = next(sh for sh in sl.shapes if sh.has_table)
+    gfx_shape.left, gfx_shape.top = Inches(5.15), Inches(1.95)
+    note = bp.by_id(sl, 129)
+    note.left, note.top, note.width, note.height = (
+        Inches(5.15), Inches(4.00), Inches(4.25), Inches(0.55))
+    table = gfx_shape.table
     names = ["Seventh chords", "Notes per chord", "Interval spacing",
              "Dissonance"]
-    meanings = ["How often they appear", "How much it varies",
-                "Distance between them", "How often it appears"]
+    meanings = ["Share of chords with a seventh",
+                "Variation in simultaneous note count",
+                "Distance between the two common intervals",
+                "Share of dissonant vertical intervals"]
     set_cell(table.cell(0, 0), "Property")
     set_cell(table.cell(0, 1), "Meaning")
     for i, (name, text) in enumerate(zip(names, meanings), start=1):
         set_cell(table.cell(i, 0), name)
         set_cell(table.cell(i, 1), text)
-    for j, width in enumerate([1.45, 1.65, 0.65]):
+    for j, width in enumerate([1.55, 1.95, 0.70]):
         table.columns[j].width = Inches(width)
     for row in table.rows:
         for para in row.cells[1].text_frame.paragraphs:
             for run in para.runs:
-                run.font.size = Pt(9)
+                run.font.size = Pt(8.5)
     bp.write(bp.by_id(sl, 129).text_frame, [
-        dict(text="Seventh chords are the strongest signal of complexity: "
-                  "twice the weight of dissonance.", size=10.5, color=BODY,
+        dict(text="v1 uses these weights; v2 weights all four equally. "
+                  "Seventh chords weigh most.", size=10, color=BODY,
              italic=True)])
     bp.notes(sl, "1:40 — Harmonic complexity is defined as the degree to which "
                  "chord changes are varied, rich and unexpected. We do not use "
@@ -271,18 +291,31 @@ def main() -> None:
                  "by 1.360. 7C has twice the weight of VDR (0.443 vs 0.201) and "
                  "its correlation is r = 0.580, p = 0.003 at high training.")
 
+    # ---- 6b. Chord representation ------------------------------------------
+    retitle(ts, "How a Chord Becomes 48 Numbers",
+            "Seven slots, each with a musical meaning", 6)
+    tb = bp.by_id(ts, 127)
+    tb._element.getparent().remove(tb._element)
+    bp.add_picture_fit(ts, "slides_assets/chord_tensor.png",
+                       0.60, 1.95, 8.60, 3.00)
+    bp.notes(ts, "0:45 — Each chord is a fixed vector of 48 yes/no values in "
+                 "seven slots: root (12), quality (8), seventh (5), extensions "
+                 "(3), alterations (4), added notes (3) and bass (13). The "
+                 "example is Cmaj7: four values are active — root C, quality "
+                 "major, seventh maj7 and bass root — and the other 44 are "
+                 "zero. Because the slots are explicit, any vector decodes back "
+                 "to a chord symbol, unlike piano-roll or multi-hot encodings. "
+                 "Training uses 877k progressions from Chordonomicon [1].")
+
     # ---- 7. Architecture ----------------------------------------------------
     sl = s[6]
     retitle(sl, "The PEARL Model",
             "A network that turns a progression into 32 numbers, then rebuilds "
             "it [2, 5]", 7)
     arch = next(sh for sh in sl.shapes if sh.name == "Picture 126")
-    arch.crop_top = 4 / 464  # remove stray sliver from the source figure
-    # keep the architecture only: drop the training-loss panel on the right
-    arch.crop_right = 576 / 1871
-    new_w = int(arch.width * (1 - 576 / 1871))
-    arch.width = new_w
-    arch.left = int((Inches(10) - new_w) / 2)
+    arch._element.getparent().remove(arch._element)
+    bp.add_picture_fit(sl, "slides_assets/pearl_pipeline.png",
+                       0.60, 1.92, 8.80, 2.05)
     bp.write(bp.by_id(sl, 128).text_frame, bp.bullets([
         ("Encoder: ", "a progression → 32 numbers (z)."),
         ("Decoder: ", "32 numbers → a progression."),
@@ -305,14 +338,22 @@ def main() -> None:
     # ---- 8. Inference -------------------------------------------------------
     sl = s[7]
     retitle(sl, "Reaching a Target Complexity",
-            "The model is frozen; we only move the 32 numbers", 8)
-    bp.write(bp.by_id(sl, 127).text_frame, bp.bullets([
+            "The space is ordered by complexity; we move z toward the target",
+            8)
+    body = bp.by_id(sl, 127)
+    body.width = Inches(4.05)
+    bp.write(body.text_frame, bp.bullets([
         ("Goal: ", "move z until complexity = target."),
         ("About 20–30 small steps."),
         ("A penalty keeps z close to the original."),
-        ("One property at a time: ", "sevenths, dissonance, or variety."),
-    ], size=11, space_after=9))
-    bp.write(bp.by_id(sl, 128).text_frame, [
+        ("One property at a time.", ""),
+    ], size=10.5, space_after=7))
+    ex = bp.by_id(sl, 128)
+    ex.left, ex.top, ex.width, ex.height = (
+        Inches(0.60), Inches(3.30), Inches(4.05), Inches(1.55))
+    bp.add_picture_fit(sl, "slides_assets/latent_control.png",
+                       5.20, 1.90, 4.10, 3.00)
+    bp.write(ex.text_frame, [
         dict(text="Example: seventh chords, target 1.0", size=12,
              color=RED, bold=True, space_after=8),
         dict(text="Input", size=11, color=GREY, bold=True, space_after=2),
@@ -320,10 +361,15 @@ def main() -> None:
         dict(text="Output", size=11, color=GREY, bold=True, space_after=2),
         dict(text="Cmaj7 – Dmin7 – Cmin7 – Gmin7 – Cmin7", size=11,
              space_after=8),
-        dict(text="The same model serves any target in [0, 1]; no retraining.",
-             size=10.5, italic=True),
+        dict(text="Any target in [0, 1]; no retraining.", size=10.5,
+             italic=True),
     ])
-    bp.notes(sl, "1:10 — Inference optimises z directly. We minimise the MSE "
+    bp.notes(sl, "1:10 — The plot is the real PCA of 3,000 encoded "
+                 "progressions; colour is mean PCS, so complexity increases "
+                 "from left to right. We start from the input point and move z "
+                 "toward the target region; the decoder turns the selected "
+                 "point into a new progression. Formally, inference optimises z "
+                 "directly. We minimise the MSE "
                  "between the predicted PCS and the target, plus a "
                  "regularisation term that anchors z to the original code, with "
                  "λ_reg = 0.005. We use Adam with learning rate 0.5 for 90 "
@@ -338,12 +384,27 @@ def main() -> None:
     # ---- 9. Setup ------------------------------------------------------------
     sl = s[8]
     retitle(sl, "Experimental Setup", "Data, training and baselines", 9)
-    bp.write(bp.by_id(sl, 127).text_frame, bp.bullets([
-        ("One model, ", "trained once on 877k real progressions [1]."),
-        ("Split: ", "80/10/10 by song; results on unseen songs."),
-        ("Same test for CVAE and RVAE [2]; ", "outputs from their authors."),
-        ("Five targets: ", "0.00, 0.25, 0.50, 0.75, 1.00."),
-    ], size=13, space_after=14))
+    body = bp.by_id(sl, 127)
+    body._element.getparent().remove(body._element)
+    cards = [
+        ("DATA", "877k", "progressions", "real songs [1]", 0.60),
+        ("SPLIT", "80/10/10", "by song", "results on unseen songs", 2.85),
+        ("TASK", "5", "targets", "from 0.00 to 1.00", 5.10),
+        ("COMPARE", "2", "baselines", "CVAE · RVAE [2]", 7.35),
+    ]
+    for tag, num, caption, detail, x in cards:
+        bp.add_textbox(sl, x, 2.00, 2.05, 0.30,
+                       [dict(text=tag, size=9, color=RED, bold=True)])
+        size = 30 if len(num) <= 4 else 24
+        bp.add_textbox(sl, x, 2.22, 2.05, 0.62,
+                       [dict(text=num, size=size, color=DARK_RED, bold=True)])
+        bp.add_textbox(sl, x, 2.92, 2.05, 0.30,
+                       [dict(text=caption, size=11, color=BODY, bold=True)])
+        bp.add_textbox(sl, x, 3.20, 2.05, 0.55,
+                       [dict(text=detail, size=9.5, color=GREY)])
+    bp.add_textbox(sl, 0.60, 3.85, 8.80, 0.40, [
+        dict(text="Every model gets the same input loop and the same five "
+                  "targets.", size=11, color=BODY, italic=True)])
     bp.notes(sl, "0:45 — Training uses 30 epochs on 877k progressions [1], "
                  "Adam with learning rate 5e-4 and batch 256; the full table is "
                  "in the paper. All 32 latent dimensions are active, with KL "
@@ -355,7 +416,6 @@ def main() -> None:
                  "performs the same task: enrich one loop at five PCS levels.")
 
     # ---- 9b. Evaluation metrics (new slide) ---------------------------------
-    ms = clone_slide(prs, s[8])
     retitle(ms, "Evaluation Metrics",
             "The score comes from listeners, not statistics. These metrics "
             "check the target and the key", 10)
@@ -387,30 +447,26 @@ def main() -> None:
                  "optimised and original z. PCS itself is perceptual: it comes "
                  "from the listening study, not from a PPM/HMM/RNN language "
                  "model as in [2].")
-    move_slide(prs, ms, 9)
-
-    # ---- 10. Latent space -----------------------------------------------------
-    sl = s[9]
-    retitle(sl, "What the Model Learned",
-            "3,000 progressions: complexity forms a gradient, keys form "
-            "clusters", 11)
-    note = bp.by_id(sl, 128)
-    note.top, note.height = Inches(4.56), Inches(0.45)
-    bp.write(note.text_frame, [
-        dict(runs=[("Complexity and key are organised, ", True),
-                   ("so we can move z in a controlled way.", False)],
-             size=10, space_after=3),
-        dict(text="32/32 dimensions used · complexity error 0.0034 · key "
-                  "accuracy 98.4%", size=9.5, color=GREY),
-    ])
-    bp.notes(sl, "0:45 — This is a PCA of 3,000 encoded progressions. On the "
-                 "left, colour is mean PCS: the gradient is smooth, so "
-                 "complexity is organised in z. On the right, colour is the "
-                 "detected key: progressions in the same key cluster together. "
-                 "All 32 dimensions are active, c_predictor MSE is 0.0034, key "
-                 "accuracy is 98.4%, and the first two components capture 42.6% "
-                 "of the variance. This organisation is what makes gradient "
-                 "ascent reliable.")
+    # ---- 10. Per-property control ------------------------------------------
+    retitle(pp, "Result: Choose What Changes",
+            "Earlier systems return one number; PEARL can target one property",
+            11)
+    body = bp.by_id(pp, 127)
+    bp.write(body.text_frame, bp.bullets([
+        ("Seventh chords only: ", "score 0.002 → 0.982; all five chords get a "
+         "seventh."),
+        ("Dissonance only: ", "0.005 → 0.987; no seventh chords added."),
+        ("Note variety only: ", "−0.002 → 0.983; other properties unchanged."),
+    ], size=13, space_after=14))
+    bp.add_picture_fit(pp, "slides_assets/property_outputs.png",
+                       0.60, 3.35, 8.80, 1.62)
+    bp.notes(pp, "0:50 — This is the capability earlier systems do not have "
+                 "because they expose a single complexity number. Here we set "
+                 "the loss to one property. Targeting seventh chords takes the "
+                 "score from 0.002 to 0.982 and all five chords get a seventh. "
+                 "Targeting dissonance takes it from 0.005 to 0.987 without "
+                 "adding seventh chords. Targeting note variety takes it from "
+                 "−0.002 to 0.983 with the other properties almost unchanged.")
 
     # ---- 11. Complexity levels -------------------------------------------------
     sl = s[10]
@@ -459,34 +515,31 @@ def main() -> None:
     retitle(sl, "Results: Staying in Key",
             "Five levels, input in C minor", 14)
     bp.write(bp.by_id(sl, 127).text_frame, bp.bullets([
-        ("88% of roots stay in key ", "(CVAE 84%, RVAE 76%) [2]."),
-        ("32–36% keep the same root; ", "CVAE 84%."),
-        ("32–44% keep major/minor quality; ", "CVAE 72%."),
-        ("Low overlap is expected: ", "the penalty favours the target."),
-    ], size=10, space_after=8))
-    table = next(sh for sh in sl.shapes if sh.has_table).table
-    for j, text in enumerate(["Model", "In key", "Same roots", "Same quality"]):
-        cell = table.cell(0, j)
-        set_cell(cell, text)
-        for para in cell.text_frame.paragraphs:
-            for run in para.runs:
-                run.font.size = Pt(9)
-    for j, width in enumerate([1.10, 0.85, 1.15, 1.35]):
-        table.columns[j].width = Inches(width)
-    bp.write(bp.by_id(sl, 129).text_frame, [
-        dict(text="Means of five levels, input in C minor. 'Same roots' = same "
-                  "root at the same position.", size=10, color=GREY,
-             italic=True)])
-    bp.notes(sl, "1:00 — Tonal coherence combines three measures. Scale "
-                 "adherence is 88% for both variants, against 84% for CVAE and "
-                 "76% for RVAE [2]. Positional overlap is 32–36%, against "
-                 "64–84% for the baselines: most chord identities change, which "
-                 "is expected when complexity rises. Quality preservation is 32% "
-                 "for v1 and 44% for v2; CVAE keeps 72%, partly because it "
-                 "copies the input at level 1. The key_predictor stays stable "
-                 "across the five levels. The low overlap is a consequence of "
-                 "λ_reg = 0.005, which favours reaching the target; tonal "
-                 "structure is maintained by the key-organised latent space.")
+        ("88% of roots stay in key ", "vs CVAE 84% and RVAE 76% [2]."),
+        ("Overlap 32–36% ", "vs 84% for CVAE: PEARL changes more chords."),
+        ("Low overlap is expected: ", "the anchor favours the target."),
+    ], size=10.5, space_after=10))
+    tbl_shape = next(sh for sh in sl.shapes if sh.has_table)
+    tbl_shape._element.getparent().remove(tbl_shape._element)
+    bp.add_picture_fit(sl, "slides_assets/overlap_vs_key.png",
+                       4.95, 1.95, 4.35, 2.90)
+    note = bp.by_id(sl, 129)
+    note.left, note.top, note.width, note.height = (
+        Inches(0.60), Inches(3.95), Inches(4.05), Inches(0.80))
+    bp.write(note.text_frame, [
+        dict(text="Mean of five levels, input in C minor. Overlap = same root "
+                  "at the same position.", size=9.5, color=GREY, italic=True)])
+    bp.notes(sl, "1:00 — The plot places each model by scale adherence "
+                 "(horizontal) and overlap with the input (vertical). CVAE sits "
+                 "top right: it copies the input, with 84% overlap and 84% "
+                 "adherence. RVAE has 64% overlap and 76% adherence. PEARL sits "
+                 "bottom right: it rewrites most chords (32–36% overlap) but "
+                 "keeps 88% of roots in key, the highest adherence. Quality "
+                 "preservation is 32% for v1 and 44% for v2; CVAE keeps 72%, "
+                 "partly because it copies the input at level 1. The low overlap "
+                 "is a consequence of the anchor weight, which favours reaching "
+                 "the target; tonal structure is maintained by the key-"
+                 "organised latent space.")
 
     # ---- 14. Conclusions ---------------------------------------------------------
     sl = s[13]
@@ -500,6 +553,7 @@ def main() -> None:
         ("Limits: ", "harmony only; 43 listeners; key kept in 6 of 11."),
         ("Next: ", "user-controlled penalty, rhythm, larger studies."),
     ], size=11.5, space_after=10))
+    link_repo(sl)
     bp.notes(sl, "0:50 — Summary: PCS is a perceptual score with four "
                  "interpretable dimensions, obtained from 1,032 pairwise "
                  "judgements by 43 listeners. Gradient ascent on z reaches any "
@@ -512,6 +566,7 @@ def main() -> None:
                  "conditioning, and larger listening studies.")
 
     # ---- 15. Acknowledgments ------------------------------------------------------
+    link_repo(s[14])
     bp.notes(s[14], "0:20 — Thank the audience and invite questions, musical or "
                     "technical. The next slide lists the references, which can "
                     "be left on screen during Q&A.")
@@ -559,7 +614,13 @@ def main() -> None:
                  "[1] dataset, [2] CVAE/RVAE baselines, [3] jSymbolic features, "
                  "[4] musical sophistication index, [5] VAEs for music, "
                  "[6] VAE reharmonization, [7] tonal theory.")
+    refs_slide = sl
 
+    # ---- Final structure: drop outline, encoding and PCA; set the order -----
+    for dead in (s[1], s[2], s[4], s[9]):
+        delete_slide(prs, dead)
+    reorder(prs, [s[0], mot, s[3], s[5], ts, s[6], s[7], s[8], ms, s[10],
+                  pp, s[11], s[12], s[13], s[14], refs_slide])
     renumber(prs)
     prs.save(DECK)
     print(f"updated {DECK}: {len(prs.slides.__iter__.__self__._sldIdLst)} slides, "
